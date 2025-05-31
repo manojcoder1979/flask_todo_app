@@ -6,6 +6,8 @@
     <h1>Add Stock Manually</h1>
     
     <form method="POST" action="/add_item">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         <div class="form-group">
             <label for="denier">Denier:</label>
             <input type="text" id="denier" list="Denier" name="denier" placeholder="Select Denier" required autocomplete="off">
@@ -133,16 +135,19 @@
                         <td>{{ item.quantity1 }}</td>
                         <td>{{ item.unit1 }}</td>
                         <td>{{ item.price }}</td>
-                        <td class="action-buttons" colspan="2">
-                            <button class="edit-btn" onclick="window.location.href='/edit/{{ item.id }}'">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        <td>
+                        <td class="action-buttons">
+    <button class="edit-btn" onclick="window.location.href='/edit/{{ item.id }}'">
+        <i class="fas fa-edit"></i>
+    </button>
+</td>
+<td>
     <form method="POST" action="{{ url_for('delete', item_id=item.id) }}" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this item?');">
         <button type="submit" class="delete-btn">
             <i class="fas fa-trash"></i>
         </button>
     </form>
+</td>
+
 </td>
                         </td>
                     </tr>
