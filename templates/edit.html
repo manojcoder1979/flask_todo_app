@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Item{% endblock %}
+
+{% block content %}
+    <h1>Edit Item</h1>
+    
+    <form method="POST" action="{{ url_for('update_item', item_id=item.id) }}">
+        <input type="text" name="denier" value="{{ item.denier }}" placeholder="Denier" required>
+        <input type="text" name="item" value="{{ item.item }}" placeholder="Item Name" required>
+        <input type="text" name="size" value="{{ item.size }}" placeholder="Size" required>
+        <input type="text" name="colour" value="{{ item.colour }}" placeholder="Color" required>
+        <input type="number" name="nos" value="{{ item.quantity }}" placeholder="Roll/Bag" required>
+        <input type="List" name="unit" value="{{ item.unit }}" placeholder="Unit" required>
+        <input type="number" name="quantity1" value="{{ item.quantity1 }}" placeholder="Quantity 2" step='0.001' required>
+        <input type="text" name="unit1" value="{{ item.unit1 }}" placeholder="Unit 2" required>
+        <input type="number" name="price" value="{{ item.price }}" step="0.01" placeholder="Price" step='0.01' required>
+        <input type="submit" value="Update Item">
+    </form>
+
+    <div class="button-group">
+        <a href="{{ url_for('index') }}" class="back-btn">Back to List</a>
+    </div>
+{% endblock %}
