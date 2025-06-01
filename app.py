@@ -40,11 +40,12 @@ with app.app_context():
     if not os.path.exists('site.db'):
         db.create_all()
 # Define the home route
+
 @app.route('/') 
 def index():
     all_items = Items.query.all()  # Changed from items to Items
-    
-    return render_template('index.html', all_items=all_items)
+    grouped_items = Items.query.group_by(Items.item).all()
+    return render_template('index.html', all_items=grouped_items)
 
 # Define the add item route
 @app.route('/add_item', methods=['POST'])
@@ -122,11 +123,14 @@ def edit_item(item_id):
     item_to_edit = Items.query.get_or_404(item_id)
     return render_template('edit.html', item=item_to_edit)
 # Define the search route
+
+
 @app.route('/search', methods=['POST'])
 def search():
     search_query = request.form.get('search_query')
     all_items = Items.query.filter(Items.item.contains(search_query)).all()
     return render_template('index.html', all_items=all_items)
+
 # Define the sort route
 @app.route('/sort', methods=['POST'])
 def sort():
@@ -156,9 +160,11 @@ if __name__ == '__main__':
     def run_server():
         environment = os.getenv('FLASK_ENV', 'production')
         if environment == 'development':
-            serve(app.app, host='0.0.0.0', port=5000)
+            app.run(debug=True)
+            print("Running in development mode")
         else:
             serve(app, host='0.0.0.0', port=5000)
+            print("Running in production mode")
 
-    trheading.Thread(target=run_server).start()
+    # trheading.Thread(target=run_server).start()
 
