@@ -17,8 +17,8 @@
         </div>
         <nav class="nav-menu">
             <ul>
-                <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                <li><a href="{{ url_for('index') }}"><i class="fas fa-box"></i><span>Add New Stock</span></a></li>
+                <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-box"></i><span>Add New Stock</span></a></li>
 
                 <li><a href="/reports"><i class="fas fa-chart-bar"></i><span>Reports</span></a></li>
                 <li><a href="/settings"><i class="fas fa-cog"></i><span>Settings</span></a></li>
@@ -27,7 +27,9 @@
     </div>
 
     <div class="main-content" id="mainContent">
+        
         {% block content %}
+        
         {% endblock %}
         <div class="footer">
             <p>&copy; LifeShare Soft Solution Established by Manoj Kumar</p>

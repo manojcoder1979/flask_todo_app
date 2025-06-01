@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from utilities import Utilities 
 from datetime import datetime
-
+from sqlalchemy import func
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -44,10 +44,27 @@ with app.app_context():
 @app.route('/') 
 def index():
     all_items = Items.query.all()  # Changed from items to Items
-    grouped_items = Items.query.group_by(Items.item).all()
-    return render_template('index.html', all_items=grouped_items)
+    return render_template('index.html', all_items=all_items)
 
 # Define the add item route
+@app.route('/dashboard')
+def dashboard():
+    result = (
+        db.session.query(
+            Items.item,
+            Items.colour,
+            Items.size,
+            func.sum(Items.quantity).label('bag'),
+            func.sum(Items.quantity1).label('wt')
+        )
+        .group_by(Items.item, Items.colour, Items.size)
+        .all()
+    )
+    return render_template('dashboard.html', result=result)
+
+
+
+
 @app.route('/add_item', methods=['POST'])
 
 def add_item():
