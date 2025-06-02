@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Sidebar toggle functionality
+    // Sidebar toggle
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
     const toggleBtn = document.getElementById('toggleSidebar');
@@ -8,17 +8,45 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.toggle('collapsed');
         mainContent.classList.toggle('expanded');
         
-        // Store sidebar state in localStorage
-        const isCollapsed = sidebar.classList.contains('collapsed');
-        localStorage.setItem('sidebarCollapsed', isCollapsed);
+        // Store sidebar state
+        localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
     });
 
-    // Restore sidebar state on page load
+    // Restore sidebar state
     const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
     if (isCollapsed) {
         sidebar.classList.add('collapsed');
         mainContent.classList.add('expanded');
     }
+
+    // Handle details elements
+    const details = document.querySelectorAll('details');
+    details.forEach(detail => {
+        // Store open state
+        detail.addEventListener('toggle', () => {
+            localStorage.setItem(`detail-${detail.querySelector('summary span').textContent}`, detail.open);
+        });
+
+        // Restore open state
+        const detailName = detail.querySelector('summary span').textContent;
+        const isOpen = localStorage.getItem(`detail-${detailName}`) === 'true';
+        if (isOpen) {
+            detail.setAttribute('open', '');
+        }
+    });
+
+    // Active link highlighting
+    const currentPath = window.location.pathname;
+    const links = document.querySelectorAll('.nav-menu a');
+    links.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+            const parentDetails = link.closest('details');
+            if (parentDetails) {
+                parentDetails.setAttribute('open', '');
+            }
+        }
+    });
 
     // Form validation
     const forms = document.querySelectorAll('form');

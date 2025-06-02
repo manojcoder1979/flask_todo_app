@@ -1,16 +1,12 @@
-/* Custom Properties for Dark Theming */
+/* Base styles */
 :root {
-    --primary-color: #6366f1; /* Indigo */
-    --primary-hover: #4f46e5;
-    --secondary-color: #d1d5db; /* Light gray for text */
-    --background-color: #1f2937; /* Dark gray for main background */
-    --card-background: #374151; /* Slightly lighter dark gray for cards */
-    --text-color: #f3f4f6; /* Off-white for main text */
-    --border-color: #4b5563; /* Darker gray for borders */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-    --border-radius: 8px;
-    --transition: all 0.3s ease;
+    --primary-color: #2563eb;
+    --secondary-color: #1e293b;
+    --background-color: #0f172a;
+    --text-color: #e2e8f0;
+    --border-color: #334155;
+    --hover-color: #1d4ed8;
+    --active-color: #1e40af;
 }
 
 /* Reset and Base Styles */
@@ -49,62 +45,44 @@ body {
     border: 0;
 }
 
-/* Sidebar Styles */
+/* Sidebar styles */
 .sidebar {
-    width: 250px;
-    background: #111827; /* Even darker for sidebar background */
+    width: 260px;
     height: 100vh;
+    background-color: var(--secondary-color);
     position: fixed;
     left: 0;
     top: 0;
-    transition: width 0.3s ease;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4);
+    transition: width 0.3s;
     z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    color: var(--text-color);
 }
 
 .sidebar.collapsed {
-    width: 50px;
+    width: 60px;
 }
 
 .logo {
-    padding: 20px;
+    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Lighter border for contrast */
+    border-bottom: 1px solid var(--border-color);
 }
 
 .logo span {
-    color: var(--text-color);
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.toggle-btn {
-    background: transparent;
-    border: none;
     color: var(--text-color);
-    cursor: pointer;
-    padding: 5px;
-    transition: transform 0.3s ease;
-    font-size: 1.2rem;
+    transition: opacity 0.3s;
 }
 
-.toggle-btn:hover {
-    transform: scale(1.1);
-    color: var(--primary-color);
+.sidebar.collapsed .logo span {
+    opacity: 0;
 }
 
-/* Navigation Menu */
+/* Navigation menu */
 .nav-menu {
-    padding: 20px 0;
-    flex-grow: 1;
+    padding: 1rem 0;
 }
 
 .nav-menu ul {
@@ -114,48 +92,72 @@ body {
 }
 
 .nav-menu li {
-    margin: 5px 0;
+    margin: 0.25rem 0;
 }
 
 .nav-menu a {
     display: flex;
     align-items: center;
-    padding: 12px 20px;
+    padding: 0.75rem 1rem;
     color: var(--text-color);
     text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    transition: background-color 0.2s;
 }
 
 .nav-menu a:hover {
-    background-color: rgba(255, 255, 255, 0.08); /* Subtle hover effect */
-    color: var(--primary-color); /* Highlight on hover */
+    background-color: var(--hover-color);
 }
 
-.nav-menu a.active { /* Optional: for current active link */
-    background-color: rgba(255, 255, 255, 0.15);
-    color: var(--primary-color);
-    font-weight: 600;
+.nav-menu a.active {
+    background-color: var(--active-color);
 }
 
 .nav-menu i {
-    width: 20px;
-    margin-right: 15px;
+    width: 1.5rem;
     text-align: center;
-    font-size: 1.1rem;
+    margin-right: 0.75rem;
 }
 
-/* Main Content */
-.main-content {
-    flex: 1;
-    margin-left: 250px;
-    padding: 20px;
-    transition: margin-left 0.3s ease;
+.nav-menu span {
+    transition: opacity 0.3s;
+}
+
+.sidebar.collapsed .nav-menu span {
+    opacity: 0;
+}
+
+/* Details/Summary styles */
+details summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
     display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ensure it takes full height */
+    align-items: center;
+    color: var(--text-color);
+    transition: background-color 0.2s;
+}
+
+details summary:hover {
+    background-color: var(--hover-color);
+}
+
+details summary i {
+    width: 1.5rem;
+    text-align: center;
+    margin-right: 0.75rem;
+}
+
+details[open] summary {
+    background-color: var(--active-color);
+}
+
+/* Main content */
+.main-content {
+    margin-left: 260px;
+    padding: 2rem;
+    transition: margin-left 0.3s;
+    min-height: 100vh;
+    background-color: var(--background-color);
 }
 
 .main-content.expanded {
@@ -201,6 +203,20 @@ h3.no_of_items {
     border: 1px solid var(--border-color); /* Subtle border for cards */
 }
 
+.item-form {
+    background: var(--secondary-color);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
 .form-group {
     display: flex;
     margin-top: 2rem;
@@ -210,10 +226,19 @@ h3.no_of_items {
 }
 
 .form-group label {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--secondary-color);
-    margin-bottom: 0.6rem;
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--background-color);
+    color: var(--text-color);
 }
 
 .form-group input {
@@ -364,145 +389,34 @@ tr:hover {
 
 /* Footer */
 .footer {
-    margin-top: auto; /* Pushes footer to the bottom */
-    padding: 20px;
+    margin-top: 2rem;
+    padding: 1rem;
     text-align: center;
-    color: var(--secondary-color); /* Lighter text for footer */
-    opacity: 0.8;
-    font-size: 0.85rem;
-    border-top: 1px solid var(--border-color); /* Subtle border above footer */
-    background-color: var(--background-color);
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .stock-form {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust for smaller screens */
-        gap: 1.5rem;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-}
-
+/* Responsive design */
 @media (max-width: 768px) {
     .sidebar {
-        width: 50px;
+        width: 60px;
     }
 
-    .sidebar .logo span {
-        display: none;
-    }
-
-    .nav-menu span {
-        display: none;
+    .sidebar .logo span,
+    .sidebar .nav-menu span {
+        opacity: 0;
     }
 
     .main-content {
         margin-left: 60px;
-        padding: 15px; /* Reduce main content padding */
     }
 
     .sidebar:hover {
-        width: 250px;
+        width: 260px;
     }
 
     .sidebar:hover .logo span,
     .sidebar:hover .nav-menu span {
-        display: inline;
-    }
-
-    h1 {
-        font-size: 1.75rem;
-        margin-bottom: 2rem;
-    }
-
-    h3.no_of_items {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
-
-    .stock-form {
-        padding: 1.5rem;
-        gap: 1rem;
-    }
-
-    .form-group label {
-        font-size: 0.95rem;
-        margin-bottom: 0.4rem;
-    }
-
-    .form-group input {
-        padding: 0.8rem;
-        font-size: 0.95rem;
-    }
-
-    .submit-btn {
-        padding: 0.9rem;
-        font-size: 1rem;
-    }
-
-    th, td {
-        padding: 0.9rem;
-        font-size: 0.88rem;
-    }
-
-    .edit-btn, .delete-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .mobile-container {
-        padding: 1rem; /* Adjust padding for smallest screens */
-    }
-
-    .stock-form {
-        padding: 1rem;
-        gap: 0.8rem;
-    }
-
-    .form-group label {
-        font-size: 0.88rem;
-    }
-
-    .form-group input {
-        font-size: 0.85rem;
-        padding: 0.7rem;
-    }
-
-    .submit-btn {
-        padding: 0.8rem;
-        font-size: 0.95rem;
-    }
-
-    .action-buttons {
-        flex-direction: row; /* Keep buttons in a row for very small screens if space allows */
-        gap: 0.5rem;
-        justify-content: center;
-    }
-
-    .edit-btn, .delete-btn {
-        width: 32px; /* Smaller buttons */
-        height: 32px;
-        font-size: 0.8rem;
-        padding: 0.5rem;
-    }
-
-    table {
-        min-width: 100%; /* Allow table to shrink to 100% width if needed */
-    }
-
-    th, td {
-        padding: 0.7rem;
-        font-size: 0.8rem;
+        opacity: 1;
     }
 }

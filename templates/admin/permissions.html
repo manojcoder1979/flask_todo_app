@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Permission Management{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <h1>Permission Management</h1>
+    <div class="action-bar">
+        <button class="btn btn-primary" onclick="openAddModal()">
+            <i class="fas fa-plus"></i> Add Permission
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Module</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="permissionsTable">
+                {% for permission in permissions %}
+                <tr>
+                    <td>{{ permission.id }}</td>
+                    <td>{{ permission.name }}</td>
+                    <td>{{ permission.description }}</td>
+                    <td>{{ permission.module }}</td>
+                    <td class="actions">
+                        <button class="btn-icon edit" onclick="editPermission({{ permission.id }})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon delete" onclick="deletePermission({{ permission.id }})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add/Edit Permission Modal -->
+<div id="permissionModal" class="modal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Add Permission</h2>
+        <form id="permissionForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="name">Permission Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="module">Module</label>
+                <select id="module" name="module" required>
+                    <option value="">Select Module</option>
+                    <option value="users">Users</option>
+                    <option value="roles">Roles</option>
+                    <option value="items">Items</option>
+                    <option value="sales">Sales</option>
+                    <option value="purchases">Purchases</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/permissions.js') }}"></script>
+{% endblock %}

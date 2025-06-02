@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Add Item{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Item Management</h1>
+    
+    <form id="itemForm" class="item-form" method="POST" action="{{ url_for('add_item') }}">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="denier">Denier</label>
+                <input type="text" id="denier" name="denier" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="item">Item</label>
+                <input type="text" id="item" name="item" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="size">Size</label>
+                <input type="text" id="size" name="size" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="colour">Colour</label>
+                <input type="text" id="colour" name="colour" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="unit">Unit</label>
+                <select id="unit" name="unit" required>
+                    <option value="pcs">PCS</option>
+                    <option value="kg">KG</option>
+                    <option value="mtr">MTR</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="quantity1">Alternate Quantity</label>
+                <input type="number" id="quantity1" name="quantity1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="unit1">Alternate Unit</label>
+                <select id="unit1" name="unit1" required>
+                    <option value="pcs">PCS</option>
+                    <option value="kg">KG</option>
+                    <option value="mtr">MTR</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" step="0.01" required>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Item</button>
+        </div>
+    </form>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Item No</th>
+                    <th>Denier</th>
+                    <th>Item</th>
+                    <th>Size</th>
+                    <th>Colour</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Alt. Qty</th>
+                    <th>Alt. Unit</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.item_number }}</td>
+                    <td>{{ item.denier }}</td>
+                    <td>{{ item.item }}</td>
+                    <td>{{ item.size }}</td>
+                    <td>{{ item.colour }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.unit }}</td>
+                    <td>{{ item.quantity1 }}</td>
+                    <td>{{ item.unit1 }}</td>
+                    <td>{{ item.price }}</td>
+                    <td class="actions">
+                        <button class="btn-icon edit" onclick="editItem({{ item.id }})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon delete" onclick="deleteItem({{ item.id }})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/items.js') }}"></script>
+{% endblock %}
